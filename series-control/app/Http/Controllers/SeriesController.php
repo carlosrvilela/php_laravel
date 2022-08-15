@@ -4,14 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Serie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class SeriesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $series = Serie::query()->orderBy('nome')->get();
+        $successMessage = $request->session()->get('success.message');
 
-        return view('series.index')->with('series', $series);
+        return view('series.index')
+            ->with('series', $series)
+            ->with('successMessage', $successMessage);
     }
 
     public function create()
@@ -21,8 +25,33 @@ class SeriesController extends Controller
 
     public function store(Request $request)
     {
-        Serie::create($request->all());
+        $serie = Serie::create($request->all());
 
-        return to_route('series.index');
+        return to_route('series.index')
+            ->with('success.message', "Série '{$serie->nome}' adicionada com sucesso");
+    }
+
+    public function destroy(Serie $series)
+    {
+        $series->delete();
+
+        return to_route('series.index')
+            ->with('success.message', "Série '{$series->nome}' removida com sucesso");
+    }
+
+    public function edit(Serie $series, Request $request)
+    {
+
+        return view('series.edit')
+            ->with('serie', $series);
+    }
+
+    public function update(Serie $series, Request $request)
+    {
+        $series->fill($request->all());
+        $series->save();
+
+        return to_route('series.index')
+            ->with('success.message', "Série '{$series->nome}' atualizada com sucesso");
     }
 }

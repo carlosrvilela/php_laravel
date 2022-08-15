@@ -18,4 +18,4 @@ Route::get('/', function () {
     return to_route('series.index');
 });
 
-Route::resource('/series', SeriesController::class)->only(['index', 'create', 'store']);
+Route::resource('/series', SeriesController::class)->except(['show']);
