@@ -37,4 +37,12 @@ class EloquentSeriesRepository implements SeriesRepository{
             return $serie;
         });
     }
+
+    public function updateWachedEpisodes(Array $watchedEpisodes): void
+    {
+        DB::transaction(function () use ($watchedEpisodes) {
+            DB::table('episodes')->whereIn('id', $watchedEpisodes)->update(['watched' => true]);
+            DB::table('episodes')->whereNotIn('id', $watchedEpisodes)->update(['watched' => false]);
+        });
+    }
 }
