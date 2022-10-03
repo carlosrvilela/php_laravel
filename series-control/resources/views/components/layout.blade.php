@@ -8,7 +8,13 @@
     <link rel="stylesheet" href={{ asset('/css/app.css') }}>
     <title>{{ $title }} - Controle de Séries</title>
 </head>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ route('series.index') }}">Home</a>
 
+        <a href="{{ route('logout') }}">Sair</a>
+    </div>
+</nav>
 <body>
     <div class="container">
         <h1>{{ $title }}</h1>
