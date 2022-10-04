@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href={{ asset('/css/app.css') }}>
+    <link rel="stylesheet" href={{ asset('/css/estilos.css') }}>
     <title>{{ $title }} - Controle de Séries</title>
 </head>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -13,7 +14,12 @@
         <a class="navbar-brand" href="{{ route('series.index') }}">Home</a>
 
         @auth
-        <a href="{{ route('logout') }}">Sair</a>
+        <form action="{{ route('logout') }}" method="post">
+            @csrf
+            <button class="btn btn-link">
+                Sair
+            </button>
+        </form>
         @endauth
 
         @guest
