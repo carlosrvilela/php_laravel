@@ -1,5 +1,6 @@
 <?php
 
+use App\Mail\SeriesCreated;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,5 +21,14 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/email', function () {
+    return new SeriesCreated(
+        'Serie Teste',
+        7,
+        5,
+        12
+    );
+});
 
 require __DIR__.'/auth.php';
